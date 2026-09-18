@@ -15,21 +15,11 @@ from agents.coder import generate_changes
 from tools.file_editor import apply_patches
 from tools.executor import run_tests, tests_passed
 
-
-# ============================================================
-# PAGE CONFIG
-# ============================================================
-
 st.set_page_config(
     page_title="AI Software Engineer",
     page_icon="⚙️",
     layout="wide"
 )
-
-
-# ============================================================
-# SESSION STATE
-# ============================================================
 
 DEFAULT_STATE = {
     "repo_path": "",
@@ -52,11 +42,6 @@ for key, value in DEFAULT_STATE.items():
     if key not in st.session_state:
 
         st.session_state[key] = value
-
-
-# ============================================================
-# HELPER FUNCTIONS
-# ============================================================
 
 def reset_task_state():
 
@@ -117,11 +102,6 @@ def get_test_commands():
 
     return commands
 
-
-# ============================================================
-# HEADER
-# ============================================================
-
 st.title(
     "AI Software Engineer"
 )
@@ -132,11 +112,6 @@ st.write(
 )
 
 st.divider()
-
-
-# ============================================================
-# STEP 1 — REPOSITORY
-# ============================================================
 
 st.header(
     "1. Repository"
@@ -177,9 +152,6 @@ with col_refresh:
     )
 
 
-# ============================================================
-# SCAN REPOSITORY
-# ============================================================
 
 if scan_button:
 
@@ -233,11 +205,6 @@ if scan_button:
                 error
             )
 
-
-# ============================================================
-# REFRESH REPOSITORY
-# ============================================================
-
 if refresh_button:
 
     try:
@@ -257,11 +224,6 @@ if refresh_button:
         st.exception(
             error
         )
-
-
-# ============================================================
-# REPOSITORY INFORMATION
-# ============================================================
 
 if st.session_state.repo_files is not None:
 
@@ -313,10 +275,6 @@ if st.session_state.repo_files is not None:
                 file_data["path"]
             )
 
-
-# ============================================================
-# STEP 2 — ENGINEERING TASK
-# ============================================================
 
 if st.session_state.repo_files is not None:
 
@@ -397,10 +355,6 @@ if st.session_state.repo_files is not None:
                 )
 
 
-# ============================================================
-# STEP 3 — RELEVANT CODE
-# ============================================================
-
 if st.session_state.relevant_chunks:
 
     st.divider()
@@ -435,11 +389,6 @@ if st.session_state.relevant_chunks:
                 ),
                 language="python"
             )
-
-
-# ============================================================
-# STEP 4 — PLAN
-# ============================================================
 
 if st.session_state.relevant_chunks:
 
@@ -486,9 +435,6 @@ if st.session_state.relevant_chunks:
                 )
 
 
-# ============================================================
-# DISPLAY PLAN
-# ============================================================
 
 if st.session_state.plan:
 
@@ -630,10 +576,6 @@ if st.session_state.plan:
         )
 
 
-# ============================================================
-# STEP 5 — GENERATE CODE PATCHES
-# ============================================================
-
 if (
     st.session_state.plan
     and st.session_state.patches is None
@@ -702,10 +644,6 @@ if (
                 error
             )
 
-
-# ============================================================
-# DISPLAY PATCHES
-# ============================================================
 
 if st.session_state.patches:
 
@@ -778,11 +716,6 @@ if st.session_state.patches:
                     ),
                     language="python"
                 )
-
-
-# ============================================================
-# STEP 7 — APPLY PATCHES
-# ============================================================
 
 if (
     st.session_state.patches
@@ -930,10 +863,6 @@ if st.session_state.changes_applied:
             )
 
 
-# ============================================================
-# STEP 9 — TEST RESULTS
-# ============================================================
-
 if st.session_state.test_results is not None:
 
     st.divider()
@@ -1045,10 +974,6 @@ if st.session_state.test_results is not None:
                 )
 
 
-    # ========================================================
-    # FINAL TEST STATUS
-    # ========================================================
-
     if tests_passed(
         test_results
     ):
@@ -1070,10 +995,6 @@ if st.session_state.test_results is not None:
             "generate a repair patch."
         )
 
-
-# ============================================================
-# CURRENT AGENT STATUS
-# ============================================================
 
 st.divider()
 
